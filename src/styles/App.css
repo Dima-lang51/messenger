@@ -56,16 +56,11 @@ body {
 
 .header {
   width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 100;
 }
 
 .main {
-  margin-top: 100px;
+  margin-top: 10px;
   padding-bottom: 80px;
-  background: #99acbe;
   height: 100px;
 }
 
