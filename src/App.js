@@ -1,46 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { Message } from './components/Message';
-import { Form } from './components/Form';
 import './styles/App.css';
+import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { Chat } from './screens/Chat/Chat';
+import { ChatList } from './components/ChatList';
 
 
-const name = 'me';
-const msgs = [];
+const Home = () => <h4>Home page</h4>
 
 function App() {
-
-  const [messages, setMessages] = useState(msgs);
-
-  const addMessage = (newText) => {
-    setMessages([...messages, {text: newText, author: name}]);
-  };
-
-  useEffect(() => {
-    if (messages.length && messages[messages.length-1].author === name) {
-      setMessages([...messages, {text: 'hi', author: 'robot'}]);
-    }
-  }, [messages]);
- 
   return (
-    <div className="App">
-
-      <header className='header'>
-        <div className='container'>
-          {messages.map((msg) => (
-            <Message text={msg.text} author={msg.author} />
-          ))}
-        </div>
-      </header>
-
-      <main className='main'>
-        <div className='container'>
-          <Form onSubmit={addMessage}/>
-        </div>
-      </main>
-
-      <footer className='footer'></footer>
-
-    </div>
+    <BrowserRouter>
+    <ul>
+      <li><NavLink to="/" style={({ isActive }) => ({ color: isActive ? 'green' : 'blue' })}>Home</NavLink></li>
+      <li><NavLink to="/chat" style={({ isActive }) => ({ color: isActive ? 'green' : 'blue' })}>Chat</NavLink></li>
+    </ul>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/chat' element={<ChatList />}>
+          <Route path=':id' element={<Chat />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
