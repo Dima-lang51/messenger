@@ -7,6 +7,10 @@ import { AUTHORS } from './utils/constants';
 
 //const msgs = [];
 
+
+const name = 'me';
+const msgs = [];
+
 function App() {
 
   const [messages, setMessages] = useState([]);
