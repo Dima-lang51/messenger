@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Message } from './components/Message';
 import { Form } from './components/Form';
 import './styles/App.css';
+import { AUTHORS } from './utils/constants';
+
+
+//const msgs = [];
 
 
 const name = 'me';
@@ -9,15 +13,30 @@ const msgs = [];
 
 function App() {
 
-  const [messages, setMessages] = useState(msgs);
+  const [messages, setMessages] = useState([]);
 
-  const addMessage = (newText) => {
-    setMessages([...messages, {text: newText, author: name}]);
+  const addMessage = (newMsg) => {
+    setMessages([...messages, newMsg]);
+  }
+
+  const sedMessage = (text) => {
+    addMessage({
+      author: AUTHORS.human,
+      text,
+      id: `msg-${Date.now()}`
+    })
   };
 
   useEffect(() => {
-    if (messages.length && messages[messages.length-1].author === name) {
-      setMessages([...messages, {text: 'hi', author: 'robot'}]);
+    let timeout;
+    if (messages.length && messages[messages.length-1].author === AUTHORS.human) {
+      timeout = setTimeout(() => {
+        addMessage({ author: AUTHORS.robot, text: 'hi', id: `msg-${Date.now()}`})
+      }, 2000);
+    }
+
+    return () => {
+      clearTimeout(timeout);
     }
   }, [messages]);
  
@@ -27,14 +46,14 @@ function App() {
       <header className='header'>
         <div className='container'>
           {messages.map((msg) => (
-            <Message text={msg.text} author={msg.author} />
+            <Message key={msg.id} text={msg.text} author={msg.author} />
           ))}
         </div>
       </header>
 
       <main className='main'>
         <div className='container'>
-          <Form onSubmit={addMessage}/>
+          <Form onSubmit={sedMessage}/>
         </div>
       </main>
 

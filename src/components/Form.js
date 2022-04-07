@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import '../styles/Form.css';
+import { Button } from '@material-ui/core';
+
 
 export const Form = ({ onSubmit }) => {
 
@@ -19,7 +21,8 @@ export const Form = ({ onSubmit }) => {
   return (
     <form className="form" onSubmit={handlesubmit}>
       <input value={value} onChange={handleChange} className="text" type="text" />
-      <input className="submit" type="submit" />
+      {/*<input className="submit" type="submit" /> */}
+      <Button type='submit' variant='contained'>Отправить</Button>
     </form>
   )
 }
